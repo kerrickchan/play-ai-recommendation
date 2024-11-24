@@ -13,6 +13,8 @@ import { Movie } from '@/app/models/Movie';
 type MovieContextType = {
   movies: Movie[];
   updateMovies: (movies: Movie[]) => void;
+  recommendMovies: Movie[];
+  updateRecommendMovies: (userId: number, movies: Movie[]) => void;
 };
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -29,14 +31,19 @@ export const useMovieContext = () => {
 // Provider component
 export const MovieProvider = ({ children }: { children: ReactNode }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [recommendMovies, setRecommendMovies] = useState<Movie[]>([]);
 
   const updateMovies = useCallback((newMovies: Movie[]) => {
     setMovies(newMovies);
   }, []);
 
+  const updateRecommendMovies = useCallback((userId: number, newMovies: Movie[]) => {
+    setRecommendMovies(newMovies);
+  }, []);
+
   const contextValue = useMemo(
-    () => ({ movies: movies, updateMovies }),
-    [movies, updateMovies]
+    () => ({ movies: movies, updateMovies, recommendMovies, updateRecommendMovies }),
+    [movies, updateMovies, recommendMovies, updateRecommendMovies]
   );
 
   return (
