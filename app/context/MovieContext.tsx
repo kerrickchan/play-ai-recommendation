@@ -8,17 +8,11 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-
-// Define the types
-type Movie = {
-  id: number;
-  title: string;
-};
+import { Movie } from '@/app/models/Movie';
 
 type MovieContextType = {
   movies: Movie[];
   updateMovies: (movies: Movie[]) => void;
-  filterMovies: (query: string) => void;
 };
 
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
@@ -35,24 +29,14 @@ export const useMovieContext = () => {
 // Provider component
 export const MovieProvider = ({ children }: { children: ReactNode }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
 
   const updateMovies = useCallback((newMovies: Movie[]) => {
     setMovies(newMovies);
-    setFilteredMovies(newMovies);
   }, []);
 
-  const filterMovies = useCallback((query: string) => {
-    setFilteredMovies(
-      movies.filter((movie) =>
-        movie.title.toLowerCase().includes(query.toLowerCase())
-      )
-    );
-  }, [movies]);
-
   const contextValue = useMemo(
-    () => ({ movies: filteredMovies, updateMovies, filterMovies }),
-    [filteredMovies, updateMovies, filterMovies]
+    () => ({ movies: movies, updateMovies }),
+    [movies, updateMovies]
   );
 
   return (

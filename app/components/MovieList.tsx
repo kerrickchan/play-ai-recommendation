@@ -2,11 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useMovieContext } from "@/app/context/MovieContext";
-
-type Movie = {
-  id: number;
-  title: string;
-};
+import { Movie } from "@/app/models/Movie";
 
 export default function MovieList({ movies }: Readonly<{ movies: Movie[] }>) {
   const { movies: storedMovies, updateMovies } = useMovieContext();
@@ -21,7 +17,7 @@ export default function MovieList({ movies }: Readonly<{ movies: Movie[] }>) {
       <ul className="list-disc">
         {storedMovies.map((movie) => (
           <li key={movie.id} className="text-lg">
-            {movie.title}
+            {movie.title} ({movie.genres.map((genre) => '#' + genre.trim()).join(" ")})
           </li>
         ))}
       </ul>

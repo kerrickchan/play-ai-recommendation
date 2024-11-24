@@ -54,7 +54,7 @@ class MovieRepository:
 
 
     def get_all_movies(self, limit: int = 10):
-        return self.movies.sample(n=limit)
+        return self.movies_data_frame.sample(n=limit).to_dict(orient="records")
 
     def get_movie_by_id(self, movie_id: int):
         return next((movie for movie in self.movies if movie.id == movie_id), None)

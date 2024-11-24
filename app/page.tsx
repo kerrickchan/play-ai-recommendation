@@ -3,12 +3,11 @@ import MovieList from "./components/MovieList";
 import MovieFilter from "./components/MovieFilter";
 
 async function fetchMovies() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const res = await fetch("http://127.0.0.1:8000/api/v1/movies");
   if (!res.ok) {
     throw new Error("Failed to fetch movies");
   }
-  const data = await res.json();
-  return data.slice(0, 10); // Limit to 10 movies
+  return res.json();
 }
 
 export default async function HomePage() {
@@ -17,7 +16,7 @@ export default async function HomePage() {
   return (
     <main>
       <h1 className="text-4xl font-bold mt-10 text-center">
-        Movies (Static Site Generated)
+        Movies AI Recommendation
       </h1>
       <MovieFilter />
       <MovieList movies={movies} />
