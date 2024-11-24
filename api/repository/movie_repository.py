@@ -10,7 +10,7 @@ class MovieRepository:
         self.movies_data_frame = self.init_movies_data_frame()
 
         # convert to Movie entity
-        self.movies = [Movie(**movie) for movie in self.data_frame.to_dict(orient="records")]
+        self.movies = [Movie(**movie) for movie in self.movies_data_frame.to_dict(orient="records")]
     
     def init_movies_rating_data_frame(self):
         # read merged rating movie data
