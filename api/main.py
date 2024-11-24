@@ -29,6 +29,14 @@ def root():
     return {"message": "Welcome to the Movie Recommendation API!"}
 
 
+@app.get("/movies")
+def get_movies():
+    """
+    Get a random list of movies.
+    """
+    random_movies = movies.sample(n=10)
+    return random_movies.to_dict(orient="records")
+
 @app.post("/movies/recommend")
 def recommend_movies(request: RecommendationRequest, n: int = 5):
     """
